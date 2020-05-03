@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "280531013065",
+    "firebase_url": "https://hack-book-e9b0a.firebaseio.com",
+    "project_id": "hack-book-e9b0a",
+    "storage_bucket": "hack-book-e9b0a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280531013065:android:89d3c3084f399ba28d6c18",
+        "android_client_info": {
+          "package_name": "com.bookingmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280531013065-p5j62rj9l4ut5cppic6pskh9i57li2mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAAdnYkJq9gQR0m6JxB4iMaQFBRI6gqDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280531013065-p5j62rj9l4ut5cppic6pskh9i57li2mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280531013065:android:074d090ad07dc7ee8d6c18",
+        "android_client_info": {
+          "package_name": "com.example.hackbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280531013065-p5j62rj9l4ut5cppic6pskh9i57li2mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAAdnYkJq9gQR0m6JxB4iMaQFBRI6gqDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280531013065-p5j62rj9l4ut5cppic6pskh9i57li2mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
