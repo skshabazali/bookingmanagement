@@ -11,7 +11,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email:'hotel@gmails.com',
+        email:'hotel@gmail.com',
         password:'password',
         userId:"",
     };
@@ -91,8 +91,8 @@ catch(error){
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white'}} label='password'  selectionColor='#7D31AC' value={this.state.password} onChangeText={(text)=>this.setState({password:text})} secureTextEntry={true} />
                 <TouchableOpacity onPress={()=>{
-                // this.login(this.state.email,this.state.password);
-                this.props.navigation.navigate('BottomNavigation')
+                this.login(this.state.email,this.state.password);
+                
 
                 }}>
                 <View style={{backgroundColor:'#7D31AC',height:40,justifyContent:'center',marginHorizontal:50,marginBottom:10}}>

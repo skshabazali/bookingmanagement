@@ -1,9 +1,11 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet,ScrollView,SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet,ScrollView,SafeAreaView, TouchableOpacity } from 'react-native';
 import {Icon,Button} from 'react-native-elements';
 import { normalizeWidth as nw } from "../Common/NormalizeWidth";
 import { normalizeHeight as nh } from "../Common/NormalizeHeight";
+import { TextInput } from 'react-native-paper';
+
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
@@ -31,7 +33,10 @@ class Request extends Component {
       constructor(props) {
         super(props);
         this.state={
-          requestsArray:[]
+          requestsArray:[],
+          showResturantForm:false,
+          name:'',
+          price:''
         }
       }
     callApi(){
@@ -41,6 +46,20 @@ class Request extends Component {
         this.setState({
           requestsArray:Response.data
         })
+      }).catch((error)=>{
+        console.log(error)
+      })
+    }
+    registerFood(){
+      Axios.get('http://devsmash.pythonanywhere.com/add-new-menu-item/?name='+this.state.name+'&price='+this.state.price).then((Response)=>{
+        if(Response.data)
+        {
+          this.setState({
+            showResturantForm:false,
+            name:'',
+            price:''
+          })
+        }
       }).catch((error)=>{
         console.log(error)
       })
@@ -71,31 +90,57 @@ class Request extends Component {
             
             
                 <ScrollView style={{backgroundColor:"white"}}>
+                <TouchableOpacity onPress={()=>{
+                  this.setState({
+                    showResturantForm:true
+                  })
+                }}>
                 <View style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('95%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("2%"),marginTop:hp("2%"),shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 5,
-},
-shadowOpacity: 0.36,
-shadowRadius: 6.68,
+                        shadowOffset: {
+                          width: 0,
+                          height: 5,
+                        },
+                        shadowOpacity: 0.36,
+                        shadowRadius: 6.68,
 
-elevation: 11}}>
+                        elevation: 11}}>
                     <View style={{marginLeft:nw(30),marginTop:hp("1%")}}>
                 <Text style={{color:'#7D31AC',fontSize:25}}>Restaurant</Text>
                 </View>
-                <View style={{marginLeft:wp("45%"),marginTop:hp("1%")}}>
+                <View style={{marginLeft:wp(30),marginTop:hp("1%")}}>
                    <Icon name="keyboard-arrow-right" type="MaterialIcons" color='#7D31AC' size={40}  />
                    </View>
                 </View>
-                <View style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('95%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("2%"),marginTop:hp("3%"),shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 5,
-},
-shadowOpacity: 0.36,
-shadowRadius: 6.68,
+                </TouchableOpacity>
+                {this.state.showResturantForm && <View style={{flex:1,justifyContent:'center',backgroundColor:'white',marginVertical:30}}>
+          <TextInput theme={{ colors: {
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
+                    underlineColor: 'transparent', background: '#7D31AC'
+            } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}}label='Name' value={this.state.name} onChangeText={(text)=>this.setState({name:text})}  />
+          <TextInput theme={{ colors: {
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
+                    underlineColor: 'transparent', background: '#7D31AC'
+            } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='Price' value={this.state.price} onChangeText={(text)=>this.setState({price:text})} />
+             
+             <TouchableOpacity onPress={()=>{
+                // this.login(this.state.email,this.state.password);
+                this.registerFood()
 
-elevation: 11}}>
+                }}>
+                <View style={{backgroundColor:'#7D31AC',height:40,justifyContent:'center',marginHorizontal:50,marginBottom:10}}>
+                      <Text style={{color:'white',alignSelf:'center'}}>Register</Text>
+                </View>
+                </TouchableOpacity>
+      </View>}
+                {!this.state.showResturantForm &&<View style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('95%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("2%"),marginTop:hp("3%"),shadowColor: "#000",
+                        shadowOffset: {
+                          width: 0,
+                          height: 5,
+                        },
+                        shadowOpacity: 0.36,
+                        shadowRadius: 6.68,
+
+                        elevation: 11}}>
     
                     <View style={{marginLeft:nw(30),marginTop:hp("1%")}}>
                 <Text style={{color:'#7D31AC',fontSize:25}} >Room Service</Text>
@@ -103,9 +148,9 @@ elevation: 11}}>
                 <View style={{marginLeft:wp("37%"),marginTop:hp("1%")}}>
                    <Icon name="keyboard-arrow-right" type="MaterialIcons" color='#7D31AC' size={40}  />
                    </View>
-                </View>
+                </View>}
                 
-                <FlatGrid
+                {!this.state.showResturantForm && <FlatGrid
         itemDimension={130}
         items={items}
         style={styles.gridView}
@@ -115,7 +160,7 @@ elevation: 11}}>
         renderItem={({ item, index }) => (
          <RequestComponet onLongPress={()=>{this.callApi()}} value={item}/>
         )}
-      />
+      />}
       
 
 {/* <View style={{marginTop:hp("10%"),marginLeft:wp("8%"),flexDirection:"row"}}>
