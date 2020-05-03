@@ -17,7 +17,6 @@ import colors from "../src/Common/Colors";
 const home=createStackNavigator({
   Home:{screen:Home,
     header:null,
-    
 },
 })
 
@@ -35,8 +34,6 @@ const BottomTabNavigator = createBottomTabNavigator(
     Home: { screen: home },
     Request:{screen:request},
     Hotel:{screen:hotel},
-    
-    
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({

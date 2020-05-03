@@ -145,9 +145,13 @@ class Request extends Component {
                     <View style={{marginLeft:nw(30),marginTop:hp("1%")}}>
                 <Text style={{color:'#7D31AC',fontSize:25}} >Room Service</Text>
                 </View>
-                <View style={{marginLeft:wp("37%"),marginTop:hp("1%")}}>
-                   <Icon name="keyboard-arrow-right" type="MaterialIcons" color='#7D31AC' size={40}  />
+                <TouchableOpacity onPress={()=>{
+                  this.callApi()
+                }}>
+                <View style={{marginLeft:nw(60),marginTop:hp("1%")}}>
+                   <Icon name="refresh" type="MaterialIcons" color='#7D31AC' size={40}  />
                    </View>
+                   </TouchableOpacity>
                 </View>}
                 
                 {!this.state.showResturantForm && <FlatGrid

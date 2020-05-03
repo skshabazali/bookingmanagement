@@ -11,6 +11,10 @@ import images from '../Common/images';
 const {width, height} = Dimensions.get('window');
 // create a component
 class SplashScreen extends Component {
+  static navigationOptions = {
+    header: null
+    
+  };
   constructor(props) {
     super(props);
     this.animatedValue = new Animated.Value(0.5);

@@ -166,8 +166,8 @@ callapi() {
           <Container>
             <Content>
             
-               {/* <View style={{flexDirection:"row", alignSelf:"center",marginTop:nh(10)}}>
-                   <View style={{marginRight:10}}>
+               <View style={{flexDirection:"row", alignSelf:"center",marginTop:nh(10)}}>
+                   {/* <View style={{marginRight:10}}>
                    
                    <Icon name="keyboard-arrow-left" type="MaterialIcons" color='#7D31AC' size={40} onPress={this.onleftchange} />
                    </View>
@@ -176,7 +176,7 @@ callapi() {
         }
                    <View style={{marginLeft:10}}>
                    <Icon name="keyboard-arrow-right" type="MaterialIcons" color='#7D31AC' size={40} onPress={this.onrightchange} />
-                   </View>
+                   </View> */}
 
               <View>
                 <ModalComponent active={this.state.active.modal}  setvalue={this.toggleAboutFalse}
@@ -185,15 +185,22 @@ callapi() {
                 />
               </View>
                    
-               </View> */}
+               </View>
                <View style={{marginTop:hp('5%')}}>
                 <ListItemComponent/>
                 </View>
                <View>
-                 <View style={{marginTop:hp("6%")}}>
+                 <View style={{marginTop:hp("6%"),flexDirection:'row'}}>
                    <Text style={{color:'#7D31AC',fontSize:25 ,textDecorationLine:"underline"}}>CheckInQueue</Text>
-                   
+                   <TouchableOpacity onPress={()=>{
+                  this.callapi()
+                }}>
+                <View style={{marginLeft:nw(60),marginTop:hp("1%")}}>
+                   <Icon name="refresh" type="MaterialIcons" color='#7D31AC' size={40}  />
+                   </View>
+                   </TouchableOpacity>
                  </View>
+                 
                <View style={styles.tablecontainer}>
         <Table borderStyle={{borderColor: 'black',borderWidth:1}}>
           <Row data={state.tableHead} style={styles.head}  textStyle={styles.rowtext}/>

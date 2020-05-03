@@ -14,6 +14,9 @@ import axios from "axios";
 
 // create a component
 class SignUp extends Component {
+  static navigationOptions = {
+    header: null
+  }
     constructor(props) {
         super(props);
         this.state = {

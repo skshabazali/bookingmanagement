@@ -7,8 +7,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import Axios from 'axios';
 
-
+import RNRestart from 'react-native-restart';
 // create a component
 class Hotel extends Component {
     static navigationOptions = {
@@ -40,13 +41,24 @@ class Hotel extends Component {
       }
       componentDidMount(){
         let uid=auth().currentUser.uid;
-        database()
-        .ref(`/users/${uid}`)
-        .once('value')
-        .then(snapshot => {
-            this.setState({data:snapshot.val()})
-          console.log('User data: ',this.state. data);
-        });
+        // database()
+        // .ref(`/users/${uid}`)
+        // .once('value')
+        // .then(snapshot => {
+
+        //     this.setState({data:snapshot.val()})
+        //   console.log('User data: ',snapshot.val());
+        // });
+        Axios.get('http://devsmash.pythonanywhere.com/get-hotel-profile/?auth_key='+uid).then((Response)=>{
+            console.log(Response.data)
+            this.setState({
+                email:Response.data.email,
+                name:Response.data.name,
+                phonenumber:Response.data.phone
+            })
+        }).catch((err)=>{
+            console.log(err)
+        })
       }
     render() {
      
@@ -58,19 +70,23 @@ class Hotel extends Component {
             </View>
             <View style={{marginTop:hp('3%'),marginLeft:wp("3%")}}>
                 <Text style={{fontSize:20,color:'#7D31AC'}}>User Name </Text>
-        <Text style={{fontSize:15,color:'black'}}>{this.state.data.name}</Text>
+        <Text style={{fontSize:15,color:'black'}}>{this.state.name}</Text>
             </View>
             <View style={{marginTop:hp('3%'),marginLeft:wp("3%")}}>
                 <Text style={{fontSize:20,color:'#7D31AC'}}>Email Address</Text>
-        <Text style={{fontSize:15,color:'black'}}>{this.state.data.email}</Text>
+        <Text style={{fontSize:15,color:'black'}}>{this.state.email}</Text>
             </View>
             <View style={{marginTop:hp('3%'),marginLeft:wp("3%")}}>
                 <Text style={{fontSize:20,color:'#7D31AC'}}>Phone Number</Text>
-        <Text style={{fontSize:15,color:'black'}}>{this.state.data.phonenumber}</Text>
+        <Text style={{fontSize:15,color:'black'}}>{this.state.phonenumber}</Text>
             </View>
             <TouchableOpacity onPress={()=>{
                 // this.login(this.state.email,this.state.password);
-                this.props.navigation.navigate("Login");
+                
+       
+    // Immediately reload the React Native Bundle
+    RNRestart.Restart();
+                //this.props.navigation.navigate("Login");
                 
                 }}
                 style={{marginTop:hp('8%'),marginLeft:wp("3%"),width:wp("90%")}}>

@@ -8,6 +8,10 @@ import auth from '@react-native-firebase/auth';
 import { Content,Container } from 'native-base';
 
 class Login extends Component {
+  static navigationOptions = {
+    header: null
+    
+  };
   constructor(props) {
     super(props);
     this.state = {

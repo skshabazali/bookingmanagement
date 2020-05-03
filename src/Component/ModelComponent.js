@@ -10,12 +10,17 @@ import { normalizeWidth as nw } from "../Common/NormalizeWidth";
 import { normalizeHeight as nh } from "../Common/NormalizeHeight";
 import CheckInComponent from './CheckinComponent';
 import Axios from 'axios';
+import { firebase } from '@react-native-firebase/app';
+import storage from '@react-native-firebase/storage';
+
+
 
 export default class ModalComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             checking:false,
+            url:''
         };
         
       }
@@ -26,8 +31,23 @@ export default class ModalComponent extends Component {
         this.setState({checking:false});
         this.props.setvalue();
       };
+  customComponentDidMount(){
+    //const ref=firebase
+    const ref = storage().ref('wait_token/'+this.props.checking.wait_token+"/"+this.props.checking.wait_token+".png");
+    const url = ref.getDownloadURL().then((Response)=>{
+      this.setState({
+      url:Response
+    })
+    }).catch((error)=>{
+      console.log(error)
+    })
     
+  }
   render() {
+    if(this.state.url===''){
+      console.log(this.state.url+"huuu")
+      this.customComponentDidMount()
+    }
     return (
         <View>
       <Modal
@@ -40,11 +60,11 @@ export default class ModalComponent extends Component {
         <View
           style={{
             backgroundColor: '#FFFFFF',
-            widht: wp('15%'),
-            height: hp('25%'),
+            widht: nw(100),
+            height: nh(300),
             borderRadius: 15,
           }}>
-            
+            <Image height={nh(100)} width={nw(100)} source={{uri:this.state.url}}/>
           <TouchableOpacity style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('75%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("5%"),marginTop:hp("2%"),shadowColor: "#000",
 shadowOffset: {
 	width: 0,
@@ -69,21 +89,6 @@ onPress={()=>{
                 </View>
                
                 </TouchableOpacity>
-                {/* <TouchableOpacity style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('75%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("5%"),marginTop:hp("3%"),shadowColor: "#000",
-shadowOffset: {
-	width: 0,
-	height: 5,
-},
-shadowOpacity: 0.36,
-shadowRadius: 6.68,
-
-elevation: 11}}>
-    
-                    <View style={{marginLeft:nw(30),marginTop:hp("1%")}}>
-                <Text style={{color:'#7D31AC',fontSize:25}} >Check In</Text>
-                </View>
-              
-                </TouchableOpacity> */}
 
                 <TouchableOpacity style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('75%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("5%"),marginTop:hp("4%"),shadowColor: "#000",
 shadowOffset: {

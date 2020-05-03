@@ -29,9 +29,19 @@ const Main=createStackNavigator({
 
 
   
-const SwitchNavigation =createSwitchNavigator({
-    Main:Main,
-    BottomNavigation:BottomNavigations,
+const SwitchNavigation =createStackNavigator({
+    Main:{
+        screen:Main,
+        navigationOptions:{
+            header:null
+        }
+    },
+    BottomNavigation:{
+        screen:BottomNavigations,
+        navigationOptions:{
+            header:null
+        }
+    },
 })
 
 const AppContainer = createAppContainer(SwitchNavigation);
