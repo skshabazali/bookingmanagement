@@ -10,6 +10,8 @@ import {
   } from 'react-native-responsive-screen';
 import RequestComponet from '../Component/RequestComponent';
 import { FlatGrid } from 'react-native-super-grid';
+import Axios from 'axios';
+import auth from '@react-native-firebase/auth';
 
 // create a component
 class Request extends Component {
@@ -18,46 +20,52 @@ class Request extends Component {
         headerStyle: {
             backgroundColor: '#7D31AC',
           },
-        
-        // headerTitleStyle: {
-        //   color: "#000",
-        //   //fontFamily: Fonts.type.bold,
-    
-        //   // fontWeight: Fonts.weight.bold,
-        //   fontSize: 16,
-        //   alignSelf: "center"
-        // },
         headerTintColor: "#7D31AC",
         headerBackTitleStyle: {
           color: "#000",
-          // fontFamily: Fonts.type.bold,
-          // fontWeight: Fonts.weight.bold,
           fontSize: 17
         }
       };
-    // ItemReturn=()=>{
-    //     var arr =[]
-    //     var items =[
-    //         { quantity:48,type:"Laundry"},
-    //         { quantity:28,type:"Room Serice"},
-    //         { quantity:148,type:"Food Order"},
-    //         { quantity:248,type:"Surprise Event"},
-    //     ]
-    //     for (var i=0;i<2;i++){
-    //        arr.push(<RequestComponet item={items} />) 
-    //     }
-    //   return arr;
-    //   }
+    
+
+      constructor(props) {
+        super(props);
+        this.state={
+          requestsArray:[]
+        }
+      }
+    callApi(){
+      let uid = auth().currentUser.uid
+      Axios.get("http://devsmash.pythonanywhere.com/get-customer-requests/?auth_key="+uid).then((Response)=>{
+        console.log("ssss",Response.data)
+        this.setState({
+          requestsArray:Response.data
+        })
+      }).catch((error)=>{
+        console.log(error)
+      })
+    }
+    componentDidMount(){
+      this.callApi()
+    }
     render() {
-        var items =[
-                    { quantity:48,type:"Laundry"},
-                    { quantity:28,type:"Room Serice"},
-                    { quantity:148,type:"Food Order"},
-                    { quantity:248,type:"Surprise Event"},
-                    { quantity:248,type:"Surprise Event"},
-                    { quantity:248,type:"Surprise Event"},
-                    { quantity:248,type:"Surprise Event"},
-                ]
+        let items=[]
+
+        this.state.requestsArray.map((single)=>{
+          for(let key in single)
+          {
+            single[key].map(singleObj=>{
+              items.push(
+                {
+                  quantity:key,
+                  type:singleObj.summary,
+                  msg_id:singleObj.message_id
+                }
+              )
+            })
+            
+          }
+        })
        
         return (
             
@@ -105,7 +113,7 @@ elevation: 11}}>
         // fixed
         // spacing={2}
         renderItem={({ item, index }) => (
-         <RequestComponet value={item}/>
+         <RequestComponet onLongPress={()=>{this.callApi()}} value={item}/>
         )}
       />
       
