@@ -5,12 +5,13 @@ import images from '../Common/images';
 import { normalizeHeight as nh } from '../Common/NormalizeHeight';
 import { normalizeWidth as nw } from '../Common/NormalizeWidth';
 import auth from '@react-native-firebase/auth';
+import { Content,Container } from 'native-base';
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        email:'p@g.com',
+        email:'hotel@gmails.com',
         password:'password',
         userId:"",
     };
@@ -36,6 +37,7 @@ class Login extends Component {
   
  
     login(email,password){
+        try{
    auth().signInWithEmailAndPassword(email,password)
    .then((response)=>{
     this.setState({userId:auth().currentUser.uid})
@@ -57,6 +59,10 @@ class Login extends Component {
       }
       console.log(error);
     });
+}
+catch(error){
+    alert("Enter the Fields")
+}
 
   }
 
@@ -65,14 +71,19 @@ class Login extends Component {
 //   });
   render() {
     return (
-        <ScrollView style={{flex:1,backgroundColor:'white'}}>
-        <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
+        // <ScrollView style={{flex:1,backgroundColor:'white'}}>
+        // <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
+        <Container>
+            <Content>
+            <View style={{backgroundColor:"#7D31AC"}}>
+                <Image style={{alignSelf:'center',marginBottom:60,height:nh(190),width:nw(190) ,resizeMode:'contain',backgroundColor:"#7D31AC"}} source={images.logo}/>
+                </View>
         <View style={{flex:1,justifyContent:'center',backgroundColor:'white',marginVertical:100}}>
-            <View style={{alignContent:'space-between'}} >
+            
                 {/* for treetor logo */}
-                <Image style={{alignSelf:'center',marginBottom:60,height:nh(100),width:nw(100) ,resizeMode:'contain'}} source={images.logo}/>
+               
                 <TextInput theme={{ colors: {
-                    placeholder: '#7D31AC', text: 'black', primary: '#FF4141',
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='email' value={this.state.email} onChangeText={(text)=>this.setState({email:text})} />
                 <TextInput theme={{ colors: {
@@ -80,8 +91,8 @@ class Login extends Component {
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white'}} label='password'  selectionColor='#7D31AC' value={this.state.password} onChangeText={(text)=>this.setState({password:text})} secureTextEntry={true} />
                 <TouchableOpacity onPress={()=>{
-                this.login(this.state.email,this.state.password);
-                // this.props.navigation.navigate('BottomNavigation')
+                // this.login(this.state.email,this.state.password);
+                this.props.navigation.navigate('BottomNavigation')
 
                 }}>
                 <View style={{backgroundColor:'#7D31AC',height:40,justifyContent:'center',marginHorizontal:50,marginBottom:10}}>
@@ -102,11 +113,13 @@ class Login extends Component {
             </View>
             <View>
                 {/* forgot pass and shits */}
-            </View>
+            
          
         </View>
-        </SafeAreaView>
-        </ScrollView>
+        </Content>
+        </Container>
+        // </SafeAreaView>
+        // </ScrollView>
     );
   }
 }

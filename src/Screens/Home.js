@@ -15,6 +15,7 @@ import Modal, {ModalTitle} from 'react-native-modal';
 import ModalComponent from '../Component/ModelComponent';
 import auth from '@react-native-firebase/auth';
 import axios from 'axios';
+import { IconButton } from 'react-native-paper';
 // create a component
 class Home extends Component {
     static navigationOptions = {
@@ -106,6 +107,7 @@ class Home extends Component {
       }
 callapi() {
         let uid = auth().currentUser.uid
+
         let url='http://devsmash.pythonanywhere.com/get-waiting-key-at-hotel/?auth_key='+uid
         console.log(url)
         axios.get(url)
@@ -164,7 +166,7 @@ callapi() {
           <Container>
             <Content>
             
-               <View style={{flexDirection:"row", alignSelf:"center",marginTop:nh(10)}}>
+               {/* <View style={{flexDirection:"row", alignSelf:"center",marginTop:nh(10)}}>
                    <View style={{marginRight:10}}>
                    
                    <Icon name="keyboard-arrow-left" type="MaterialIcons" color='#7D31AC' size={40} onPress={this.onleftchange} />
@@ -183,13 +185,14 @@ callapi() {
                 />
               </View>
                    
-               </View>
+               </View> */}
                <View style={{marginTop:hp('5%')}}>
                 <ListItemComponent/>
                 </View>
                <View>
                  <View style={{marginTop:hp("6%")}}>
                    <Text style={{color:'#7D31AC',fontSize:25 ,textDecorationLine:"underline"}}>CheckInQueue</Text>
+                   
                  </View>
                <View style={styles.tablecontainer}>
         <Table borderStyle={{borderColor: 'black',borderWidth:1}}>

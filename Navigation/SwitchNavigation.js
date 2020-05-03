@@ -5,7 +5,14 @@ import {createStackNavigator} from "react-navigation-stack";
 import Login from "../src/Screens/Login";
 import BottomNavigations from '../src/Screens/BottomNavigation';
 import SignUp from '../src/Screens/SignUp';
+import SplashScreen from '../src/Screens/SplashScreen';
 const Main=createStackNavigator({
+    SplashScreen:{
+        screen:SplashScreen,
+        navigationOptions: {
+            header: null,
+        },
+    },
     Login:{screen:Login,
         navigationOptions: {
             header: null,

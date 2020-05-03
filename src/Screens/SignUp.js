@@ -24,38 +24,10 @@ class SignUp extends Component {
             userId: "",
             phonenumber:"",
             fcmTokens:"",
-            loginuid:"",
-        };
-        // this.state.loginuid=this.props.navigation.state.params.userId;
-        // console.log("uid",this.state.loginuid);
-      }
-    //   callapi(){
-    //     console.log('jii')
-    //     let url='http://devsmash.pythonanywhere.com/create-hotel/' //username,password,institute_name,institute_phone,institute_address
-    //     axios.get(url,{
-    //       params:{
-    //       name:this.state.name,
-    //       email:this.state.email,
-    //       password:this.state.password,
-          
-          
-    //       }
-          
-    //     }).then((response)=>{
-    //       if(response.data.status)
-    //       {
-    //         this.props.navigation.navigate('BottomNavigation',{auth_key:response.data.auth_key})
             
-    //       }
-    //       else
-    //       {
-    //         alert('already exists')
-    //       }
-    //     }).catch((err)=>{
-    //       console.log(err)
-    //     })
-        
-    //   }
+        };
+      }
+ 
     SignUp=(email,password)=>{
             auth().createUserWithEmailAndPassword(email,password)
             .then((response) => {
@@ -68,6 +40,9 @@ class SignUp extends Component {
             const ref = database().ref(`/users/${this.state.userId}`);
             await ref.set({
                 fcmToken:fcmToken,
+                name:this.state.name,
+                email:this.state.email,
+                phonenumber:this.state.phonenumber,
               });
             let url='http://devsmash.pythonanywhere.com/create-hotel/?'
                
@@ -75,6 +50,7 @@ class SignUp extends Component {
                 axios.get(url+`name=${this.state.name}&email=${this.state.email}&password=${this.state.password}&device_token=${fcmToken}&auth_key=${this.state.userId}&phone=${this.state.phonenumber}`
     )
     .then((response)=>{
+
         console.log("user",response.data);
         this.props.navigation.navigate('BottomNavigation');
         
@@ -102,7 +78,15 @@ class SignUp extends Component {
         console.error(error);
       });
 }
-                
+    validate=(text)=>{
+        this.setState({conformpass:text})
+        if(this.state.password===this.state.conformpass){
+            this.setState({conformpass:text});
+        }
+        else{
+            alert("Confirm password does not match");
+        }
+    }     
     
 
             
@@ -112,44 +96,39 @@ class SignUp extends Component {
            <Container>
                <Content>
                 
-            <View   >
-          <Image  style={{alignSelf:'center',marginBottom:60,height:nh(100),width:nw(100) ,resizeMode:'contain'}}source={images.logo}/>
+            <View style={{backgroundColor:"#7D31AC"}}>
+          <Image   style={{alignSelf:'center',marginBottom:60,height:nh(180),width:nw(190) ,resizeMode:'contain',backgroundColor:"#7D31AC"}}source={images.logo}/>
+          </View>
+          <View style={{flex:1,justifyContent:'center',backgroundColor:'white',marginVertical:30}}>
           <TextInput theme={{ colors: {
-                    placeholder: '#7D31AC', text: 'black', primary: '#FF4141',
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}}label='Name' value={this.state.name} onChangeText={(text)=>this.setState({name:text})}  />
           <TextInput theme={{ colors: {
-                    placeholder: '#7D31AC', text: 'black', primary: '#FF4141',
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='Email' value={this.state.email} onChangeText={(text)=>this.setState({email:text})} />
              <TextInput theme={{ colors: {
-                    placeholder: '#7D31AC', text: 'black', primary: '#FF4141',
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
                     underlineColor: 'transparent', background: '#7D31AC'
             } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='Phone Number' value={this.state.phonenumber} onChangeText={(text)=>this.setState({phonenumber:text})} />
-          <TextInput style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='Password' textContentType='password' secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({password:text})}  />
-          <TextInput style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='Confirm Password' textContentType='password' secureTextEntry={true} value={this.state.conformpass} onChangeText={(text)=>this.setState({conformpass:text})}  />
-          {/* <View style={{flexDirection:'row',alignSelf:'center',justifyContent: 'space-between',}}>
-              <TouchableOpacity>
-              <View style={{borderColor:'black',borderWidth:1,borderRadius:5,width:129,height:33,justifyContent: 'center',alignContent:'center',alignItems:'center'}}>
-                <Text style={{fontSize:14}}>Male</Text>
-            </View>
-              </TouchableOpacity>
-           <TouchableOpacity>
-           <View style={{borderColor:'black',borderWidth:1,borderRadius:5,width:129,height:33,justifyContent: 'center',alignContent:'center',alignItems:'center'}}>
-                
-                <Text>Female</Text>
-            </View>
-           </TouchableOpacity>
-            
-          </View> */}
-          {/* <TextInput style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}} label='PhoneNumber' textContentType={"telephoneNumber"}  /> */}
-          <TouchableOpacity onPress={()=>{
+          <TextInput theme={{ colors: {
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
+                    underlineColor: 'transparent', background: '#7D31AC'
+            } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}}  label='Password' textContentType='password' secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({password:text})}  />
+          <TextInput theme={{ colors: {
+                    placeholder: '#7D31AC', text: 'black', primary: '#7D31AC',
+                    underlineColor: 'transparent', background: '#7D31AC'
+            } }} style={{marginHorizontal:50,marginBottom:20,backgroundColor:'white',color:'black'}}  label='Confirm Password' textContentType='password' secureTextEntry={true} value={this.state.conformpass} onChangeText={(text)=>this.validate(text)}  />
+             <TouchableOpacity onPress={()=>{
+                // this.login(this.state.email,this.state.password);
                 this.SignUp(this.state.email,this.state.password)
-              }}>
-              <View style={{backgroundColor:'#6EF31A',height:40,justifyContent:'center',marginHorizontal:50}}>
-                    <Text style={{color:'white',alignSelf:'center'}}>Sign Up</Text>
-              </View>
-              </TouchableOpacity>
+
+                }}>
+                <View style={{backgroundColor:'#7D31AC',height:40,justifyContent:'center',marginHorizontal:50,marginBottom:10}}>
+                      <Text style={{color:'white',alignSelf:'center'}}>Sign Up</Text>
+                </View>
+                </TouchableOpacity>
       </View>
                </Content>
            </Container>

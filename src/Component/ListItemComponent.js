@@ -16,27 +16,54 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Axios from 'axios';
+import auth from '@react-native-firebase/auth';
 
 // create a component
-class ListItemComponent extends Component<Props> {
+class ListItemComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
     
-   
+      kpis:{}
     };
+  }
+  callApi(){
+    let uid = auth().currentUser.uid
+
+    Axios.get("http://devsmash.pythonanywhere.com/hotel-kpis/?auth_key="+uid).then((Response)=>{
+        this.setState({
+          kpis:Response.data
+        })
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+  componentDidMount(){
+    this.callApi()
   }
 
   render() {
-    var items =[
-      { quantity:48,type:"Laundry"},
-      { quantity:28,type:"Room Serice"},
-      { quantity:148,type:"Food Order"},
-      { quantity:248,type:"Surprise Event"},
-      { quantity:248,type:"Surprise Event"},
-      { quantity:248,type:"Surprise Event"},
-      { quantity:248,type:"Surprise Event"},
-  ]
+    let items=[]
+    for(let key in this.state.kpis)
+    {
+      items.push(
+        {
+          quantity:this.state.kpis[key],
+          type:key
+        }
+      )
+    }
+    console.log(items)
+  //   var items =[
+  //     { quantity:48,type:"Laundry"},
+  //     { quantity:28,type:"Room Serice"},
+  //     { quantity:148,type:"Food Order"},
+  //     { quantity:248,type:"Surprise Event"},
+  //     { quantity:248,type:"Surprise Event"},
+  //     { quantity:248,type:"Surprise Event"},
+  //     { quantity:248,type:"Surprise Event"},
+  // ]
 
     return (
     
