@@ -58,6 +58,7 @@ class Home extends Component {
           modal:false,
           checkingsuccess:false,
           roomnumber:"",
+          wait_token:''
 
         },
         tableHead: ['Sl No', 'Customer Name ', 'Contact', 'Notify'],
@@ -99,21 +100,19 @@ class Home extends Component {
       getValue(index){
         for (let i = 0; i < this.state.tableData.length; i++) {
           if (index==i){
-            this.setState({active:{id:this.state.tableData[index][0],name:this.state.tableData[index][1],phone:this.state.tableData[index][2],modal:true,checkingsuccess:false}})
+            this.setState({active:{id:this.state.tableData[index][0],name:this.state.tableData[index][1],phone:this.state.tableData[index][2],wait_token:this.state.tableData[index][3],modal:true,checkingsuccess:false}})
           }
         }
       }
 callapi() {
-        console.log("hiiii");
         let uid = auth().currentUser.uid
-        
-           
-        this.setState({userId:uid});
-        let url='http://devsmash.pythonanywhere.com/get-waiting-key-at-hotel/?auth_key=qGZKJdXaOqcxJx6chT5ditozCWj2'
+        let url='http://devsmash.pythonanywhere.com/get-waiting-key-at-hotel/?auth_key='+uid
+        console.log(url)
         axios.get(url)
   .then((response)=>{
     let b =[]
-    // console.log(response.data)
+    console.log(response.data)
+
     response.data.map((single)=>{
       b.push(
         [single['sl.no'],single.customer_name,single.booking_id__customer__phone,single

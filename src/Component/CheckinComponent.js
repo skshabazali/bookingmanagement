@@ -10,6 +10,7 @@ import {
 } from 'react-native-responsive-screen';
 import { normalizeWidth as nw } from "../Common/NormalizeWidth";
 import { normalizeHeight as nh } from "../Common/NormalizeHeight";
+import Axios from 'axios';
 
 // create a component
 class CheckInComponent extends Component {
@@ -20,9 +21,19 @@ class CheckInComponent extends Component {
         };
       }
     valueData(){
-        this.props.oncheckingpress();
-        this.props.checkingsuccess(true,this.state.room);
-        this.setState({room:""});  
+        
+        Axios.get("http://devsmash.pythonanywhere.com/finish-checkin/?wait_token="+this.props.wait_token+"&room_no="+this.state.room).then((Response)=>{
+        console.log(Response.data)  
+        if(Response.data)
+          {
+            this.props.oncheckingpress();
+            this.props.checkingsuccess(true,this.state.room);
+            this.setState({room:""});  
+          }  
+      
+      }).catch((error)=>{
+        console.log(error)
+      })
     }
     render() {
         return (

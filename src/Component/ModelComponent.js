@@ -9,6 +9,7 @@ import {
 import { normalizeWidth as nw } from "../Common/NormalizeWidth";
 import { normalizeHeight as nh } from "../Common/NormalizeHeight";
 import CheckInComponent from './CheckinComponent';
+import Axios from 'axios';
 
 export default class ModalComponent extends Component {
     constructor(props) {
@@ -53,7 +54,15 @@ shadowOpacity: 0.36,
 shadowRadius: 6.68,
 
 elevation: 11}}
-onPress={()=>{this.setState({checking:true})}}
+onPress={()=>{
+  
+  Axios.get("http://devsmash.pythonanywhere.com/initiate-checkin/?wait_token="+this.props.checking.wait_token).then((Response)=>{
+    console.log("suuccess",Response.data)
+    this.setState({checking:Response.data})
+  }).then((error)=>{
+    console.log(error)
+  })
+  }}
 >
                     <View style={{marginLeft:nw(30),marginTop:hp("1%")}}>
                 <Text style={{color:'#7D31AC',fontSize:25}}>Intiate CheckIn</Text>
@@ -96,7 +105,7 @@ onPress={()=>{this.props.setvalue()}}
                 </View>
         
       </Modal>
-      <CheckInComponent checkingsuccess={(checkingsuccess,roomnumber)=>{this.props.checkingsuccess(checkingsuccess,roomnumber)}} active={this.state.checking} setvalue={this.toggleAboutFalse} oncheckingpress={this.togglechecking}/>
+      <CheckInComponent wait_token={this.props.checking.wait_token} checkingsuccess={(checkingsuccess,roomnumber)=>{this.props.checkingsuccess(checkingsuccess,roomnumber)}} active={this.state.checking} setvalue={this.toggleAboutFalse} oncheckingpress={this.togglechecking}/>
       </View>
     );
   }

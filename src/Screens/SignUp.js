@@ -26,8 +26,8 @@ class SignUp extends Component {
             fcmTokens:"",
             loginuid:"",
         };
-        this.state.loginuid=this.props.navigation.state.params.userId;
-        console.log("uid",this.state.loginuid);
+        // this.state.loginuid=this.props.navigation.state.params.userId;
+        // console.log("uid",this.state.loginuid);
       }
     //   callapi(){
     //     console.log('jii')
