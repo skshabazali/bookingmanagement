@@ -36,7 +36,7 @@ const images = {
   request:require("../Assets/request.png"),
   hotel:require("../Assets/hotel.png"),
   logo:require("../Assets/logo.png"),
-  profileimage:require("../Assets/hotel.jpg"),
+  profileimage:require("../Assets/hotel_one.jpg"),
   // spinner:require("../Assets/spinner.gif"),
 };
 
