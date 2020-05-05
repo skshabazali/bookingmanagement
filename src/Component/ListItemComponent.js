@@ -31,25 +31,19 @@ class ListItemComponent extends Component {
   callApi(){
     let uid = auth().currentUser.uid
 
-    Axios.get("http://devsmash.pythonanywhere.com/hotel-kpis/?auth_key="+uid).then((Response)=>{
-        this.setState({
-          kpis:Response.data
-        })
-    }).catch((error)=>{
-      console.log(error)
-    })
+    
   }
   componentDidMount(){
-    this.callApi()
+    //this.callApi()
   }
 
   render() {
     let items=[]
-    for(let key in this.state.kpis)
+    for(let key in this.props.kpis)
     {
       items.push(
         {
-          quantity:this.state.kpis[key],
+          quantity:this.props.kpis[key],
           type:key
         }
       )

@@ -63,7 +63,8 @@ class Home extends Component {
 
         },
         tableHead: ['Sl No', 'Customer Name ', 'Contact', 'Notify'],
-        tableData:[]
+        tableData:[],
+        kpis:{}
       
         };
       this.setState({today: this.state.date + '-' + this.state.month + '-' +this.state. year});
@@ -138,6 +139,13 @@ callapi() {
   }).catch((err)=>{
   console.log(err.toString());
   })
+  axios.get("http://devsmash.pythonanywhere.com/hotel-kpis/?auth_key="+uid).then((Response)=>{
+        this.setState({
+          kpis:Response.data
+        })
+    }).catch((error)=>{
+      console.log(error)
+    })
 
   }
       componentDidMount(){
@@ -187,13 +195,14 @@ callapi() {
                    
                </View>
                <View style={{marginTop:hp('5%')}}>
-                <ListItemComponent/>
+                <ListItemComponent kpis={this.state.kpis}/>
                 </View>
                <View>
                  <View style={{marginTop:hp("6%"),flexDirection:'row'}}>
                    <Text style={{color:'#7D31AC',fontSize:25 ,textDecorationLine:"underline"}}>CheckInQueue</Text>
                    <TouchableOpacity onPress={()=>{
                   this.callapi()
+
                 }}>
                 <View style={{marginLeft:nw(60),marginTop:hp("1%")}}>
                    <Icon name="refresh" type="MaterialIcons" color='#7D31AC' size={40}  />

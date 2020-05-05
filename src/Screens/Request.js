@@ -131,6 +131,19 @@ class Request extends Component {
                       <Text style={{color:'white',alignSelf:'center'}}>Register</Text>
                 </View>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={()=>{
+                // this.login(this.state.email,this.state.password);
+                this.setState({
+                  showResturantForm:false,
+                  name:'',
+                  price:''
+                })
+
+                }}>
+                <View style={{backgroundColor:'#7D31AC',height:40,justifyContent:'center',marginHorizontal:50,marginBottom:10}}>
+                      <Text style={{color:'white',alignSelf:'center'}}>Cancel</Text>
+                </View>
+                </TouchableOpacity>
       </View>}
                 {!this.state.showResturantForm &&<View style={{flexDirection:"row",backgroundColor:"white",height:hp("7%"),width:wp('95%'),paddingRight:wp("2%"),paddingLeft:wp("2%"),marginLeft:wp("2%"),marginTop:hp("3%"),shadowColor: "#000",
                         shadowOffset: {

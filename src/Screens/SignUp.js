@@ -87,7 +87,7 @@ class SignUp extends Component {
             this.setState({conformpass:text});
         }
         else{
-            alert("Confirm password does not match");
+            //alert("Confirm password does not match");
         }
     }     
     
