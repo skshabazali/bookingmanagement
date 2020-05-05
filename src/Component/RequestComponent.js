@@ -33,7 +33,7 @@ class RequestComponet extends Component {
         <Text style={{color:'#7D31AC',fontSize:17}} >{this.props.value.quantity}</Text>
                 </View>
                 <View style={{alignItems:"center",marginTop:hp("2%")}} >
-        <Text style={{color:'#7D31AC',fontSize:17}}>{this.props.value.type}</Text>
+        <Text style={{color:'#7D31AC',fontSize:17,textAlign:'center'}}>{this.props.value.type}</Text>
                 </View>
             </View>
             </TouchableOpacity>
@@ -45,7 +45,7 @@ class RequestComponet extends Component {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
-        height:hp("20%"),
+        height:'auto',
         width:wp("45%"),
         shadowColor: "#000",
 shadowOffset: {
